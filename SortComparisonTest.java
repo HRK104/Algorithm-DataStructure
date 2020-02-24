@@ -71,7 +71,7 @@ public class SortComparisonTest
     
     @Test
     public void testSort() {
-    	double[] numbers = {2.0,3.0,7.0,5.0,4.0};
+    	double[] numbers = {7.0,2.0,3.0,5.0,4.0};
     	SortComparison sort = new SortComparison();
     	assertEquals( "Checking insertionSort for {2.0,3.0,7.0,5.0,4.0}", "[2.0, 3.0, 4.0, 5.0, 7.0]", sort.toString(new SortComparison().insertionSort(numbers)) );
     	assertEquals( "Checking selectionSort for {2.0,3.0,7.0,5.0,4.0}", "[2.0, 3.0, 4.0, 5.0, 7.0]", sort.toString(new SortComparison().selectionSort(numbers))  );
