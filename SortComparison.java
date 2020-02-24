@@ -77,12 +77,24 @@ import java.util.Arrays;
 	
     	if(a.length==0) return null;
 		 //todo: implement the sort
-    	partition(a,0,a.length-1);
+    	//partition(a,0,a.length-1);
+    	recursiveQuick(a,0,a.length-1);
     	return a;
 
     }//end quicksort
     
-    static void partition(double[] numbers, int lo, int hi) {
+    
+    public static void recursiveQuick(double[] numbers, int lo, int hi) {
+    	if(hi <= lo) {
+    	return;
+    	}
+    	int pivotPos = partition(numbers, lo, hi);
+    	recursiveQuick(numbers, lo, pivotPos-1);
+    	recursiveQuick(numbers, pivotPos+1, hi);
+    	}
+    
+    
+    static int partition(double[] numbers, int lo, int hi) {
     	int i = lo;
     	int j = hi+1;
     	double pivot = numbers[lo];
@@ -101,7 +113,7 @@ import java.util.Arrays;
     	}
     	numbers[lo] = numbers[j];
     	numbers[j] = pivot;
-    	//return j;
+    	return j;
     }
     /**
      * Sorts an array of doubles using Merge Sort.
