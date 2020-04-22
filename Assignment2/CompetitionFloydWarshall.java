@@ -1,14 +1,12 @@
-import java.io.BufferedReader;
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
+import java.lang.NullPointerException;
+import java.lang.UnsupportedOperationException;
 
-//
-//public class CompetitionFloydWarshall {
-//
-//}
+
 /*
  * A Contest to Meet (ACM) is a reality TV contest that sets three contestants at three random
  * city intersections. In order to win, the three contestants need all to meet at any intersection
@@ -26,110 +24,78 @@ import java.util.Scanner;
  * This class implements the competition using Floyd-Warshall algorithm
  */
 
-public class CompetitionFloydWarshall {
-	
-	String filename;
-	int sA;
-	int sB;
-	int sC;
-	Digraph graph;
-	int numOfStreets;
-	double maxPath =0.0;
-	int minSpeed;
 
-    /**
-     * @param filename: A filename containing the details of the city road network
-     * @param sA, sB, sC: speeds for 3 contestants
-     * @throws IOException 
-     */
-    CompetitionFloydWarshall (String filename, int sA, int sB, int sC) throws IOException{
+public class CompetitionFloydWarshall{
 
-        //TODO
-    	this.filename = filename;
-    	this.sA = sA;
-    	this.sB = sB;
-    	this.sC = sC;
-    	
-    	Scanner sc2 = null;
-        try {
-            sc2 = new Scanner(new File(filename));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  
+    public  Digraph graph;
+    public int minSpeed;
+    public double maxPath;
+    public String filename;
+    public int sA;
+    public int sB;
+    public int sC;
+
+
+    CompetitionFloydWarshall (String filename, int sA, int sB, int sC){
+        try{
+
+        	this.filename = filename;
+            File file = new File(filename);
+            Scanner in = new Scanner(file);
+
+            this.graph = new Digraph(in);
+            this.filename = filename;
+            
+            minSpeed = 0;
+//            if(sA>0) minSpeed = sA;
+//            if(sB>0 && sB<minSpeed) minSpeed = sB;
+//            if(sC>0 && sC>minSpeed) minSpeed = sC;
+            this.sA = sA;
+            this.sB = sB;
+            this.sC = sC;
+            this.minSpeed = Math.min(Math.min(sA,sB),sC);
+            
+
+            this.maxPath = 0.0;
+
+        } catch (FileNotFoundException | NullPointerException | UnsupportedOperationException e){
+
+            this.filename = null;
+            this.graph = null;
         }
-        Scanner s2 = new Scanner(sc2.nextLine());
-        String s = s2.next(); // 1stline
-        graph = new Digraph(Integer.parseInt(s));
-        s2 = new Scanner(sc2.nextLine());
-        s = s2.next(); // 2ndline
-        numOfStreets = Integer.parseInt(s);
-        while (sc2.hasNextLine()) { // 3rdline onwards
-                s2 = new Scanner(sc2.nextLine());
-            while (s2.hasNext()) {
-                String word1 = s2.next();
-                String word2 = s2.next();
-                String word3 = s2.next();
-//                System.out.println("word1:"+word1);
-//                System.out.println("word2:"+word2);
-//                System.out.println("word3:"+word3);
-                int head = Integer.parseInt(word1);
-        		int tail = Integer.parseInt(word2);
-        		double cost = Double.parseDouble(word3);
-        		DirectEdge costGraph = new DirectEdge(head,tail,cost);
-        		//DirectEdge costGraph = new DirectEdge(Integer.parseInt(arr[0]),Integer.parseInt(arr[1]),Double.parseDouble(arr[2]));
-        		graph.addEdge(costGraph);
+
+        if(/*this.shortestPaths != null &&*/ this.graph != null &&this.graph.getValid() /*&& !this.shortestPaths.hasNegativeCycle*/){
+
+
+            for (int v = 0; v < this.graph.V(); v++) {
+            	FloydWarshallSP sp = new FloydWarshallSP(graph,v);
+                for (int w = 0; w < sp.table.length; w++) {
+                	for(int k=0; k< sp.table[w].length; k++) {
+                		if(sp.table[w][k] > maxPath) maxPath = sp.table[w][k];
+                	}
+
+                }
             }
         }
         
-//    	File file = new File(filename);
-//    	BufferedReader br = new BufferedReader(new FileReader(file));
-//    	String str = br.readLine(); // 1st line
-//    	graph = new Digraph(Integer.parseInt(str));
-//    	str = br.readLine(); //2nd line
-//    	numOfStreets = Integer.parseInt(str);
-//    	str = br.readLine(); //3rd line onwards
-//    	while(str != null){
-//    	    //System.out.println(str);
-//    		String[] arr = str.split(" ");
-////    		System.out.println("Integer.parseInt(arr[0]): "+arr[0]);
-////    		System.out.println("Integer.parseInt(arr[0]): "+arr[1]);
-////    		System.out.println("Integer.parseInt(arr[0]): "+arr[2]);
-//    		DirectEdge costGraph = new DirectEdge(Integer.parseInt(arr[0]),Integer.parseInt(arr[1]),Double.parseDouble(arr[2]));
-//    		graph.addEdge(costGraph);
-//    	    str = br.readLine();
-//    	}
-//    	br.close();
-    	
-    	minSpeed = sA;
-    	if(sB<minSpeed) minSpeed = sB;
-    	if(sC<minSpeed) minSpeed = sC;
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
     }
 
 
-    /**
-     * @return int: minimum minutes that will pass before the three contestants can meet
-     */
     public int timeRequiredforCompetition(){
 
-        //TO DO
-    	for(int i=0; i< graph.V(); i++) {
-    		//System.out.println("start for within timeRequiredforCompetition");
-    		FloydWarshallSP sp = new FloydWarshallSP(graph,i);
-    		//System.out.println("end FloydWarshallSP sp = new FloydWarshallSP(graph,i);");
-    		
-    		for(int j=0; j<sp.table.length; j++) {
-    			for(int k=0; k<sp.table[j].length; k++) {
-    				if(sp.table[j][k] > maxPath) maxPath = sp.table[j][k];
-    			}
-    		}
-//    		for(int j=0; j<graph.V();j++) {
-//    			if(sp.hasPathTo(j)) {
-//    				System.out.println("sp.distTo(j): "+sp.distTo(j));
-//    				if(this.maxPath < sp.distTo(j)) this.maxPath = sp.distTo(j);
-//    			}
-//    		}
-    	}
-    	//if(maxPath==0.0) return -1;
-        return (int) Math.ceil(1000 * maxPath/minSpeed);
+    	if(sA>100 || sB >100 || sC>100 || sA<50 || sB<50 || sC<50) return -1;
+    	if(this.maxPath <= 0.0 || this.minSpeed <= 0 || this.filename == null || this.minSpeed < 50 || this.minSpeed > 100) return -1;
+        double time = (1000*this.maxPath)/this.minSpeed;
+        return (int) Math.ceil(time);
     }
-
 }

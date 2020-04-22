@@ -9,23 +9,23 @@ public class DirectEdge {
 		this.cost = cost;
 	}
 	
-	DirectEdge(DirectEdge e){
-		this.head = e.head;
-		this.tail = e.tail;
-		this.cost = e.cost;
-	}
+//	DirectEdge(DirectEdge e){
+//		this.head = e.head;
+//		this.tail = e.tail;
+//		this.cost = e.cost;
+//	}
 	
-	public int getHead() {
-		return this.head;
+	public int from() {
+		return tail;
 	}
-	
-	public int getTail() {
-		return this.tail;
+
+	public int to() {
+		return head;
 	}
-	
-	public double getCost() {
-		return this.cost;
-	}
+
+//	public double weight() {
+//		return cost;
+//	}
 	
 
 }

@@ -49,18 +49,18 @@ public class Bag<Item> implements Iterable<Item> {
      * @return {@code true} if this bag is empty;
      *         {@code false} otherwise
      */
-    public boolean isEmpty() {
-        return first == null;
-    }
+//    public boolean isEmpty() {
+//        return first == null;
+//    }
 
     /**
      * Returns the number of items in this bag.
      *
      * @return the number of items in this bag
      */
-    public int size() {
-        return n;
-    }
+//    public int size() {
+//        return n;
+//    }
 
     /**
      * Adds the item to this bag.
@@ -94,32 +94,15 @@ public class Bag<Item> implements Iterable<Item> {
         }
 
         public boolean hasNext()  { return current != null;                     }
-        public void remove()      { throw new UnsupportedOperationException();  }
+        //public void remove()      { throw new UnsupportedOperationException();  }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            //if (!hasNext()) throw new NoSuchElementException();
             Item item = current.item;
             current = current.next; 
             return item;
         }
     }
 
-    /**
-     * Unit tests the {@code Bag} data type.
-     *
-     * @param args the command-line arguments
-     */
-//    public static void main(String[] args) {
-//        Bag<String> bag = new Bag<String>();
-//        while (!StdIn.isEmpty()) {
-//            String item = StdIn.readString();
-//            bag.add(item);
-//        }
-//
-//        StdOut.println("size of bag = " + bag.size());
-//        for (String s : bag) {
-//            StdOut.println(s);
-//        }
-//    }
-
+   
 }

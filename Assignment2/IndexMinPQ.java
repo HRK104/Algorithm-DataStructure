@@ -1,16 +1,6 @@
-//reference from https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer>{
+public class IndexMinPQ<Key extends Comparable<Key>> {
 
 		private int maxN;
 		private int n;
@@ -105,33 +95,5 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
 			}
 		}
 
-		public Iterator<Integer> iterator() {
-			return new HeapIterator();
-		}
 
-		public class HeapIterator implements Iterator<Integer> {
-
-			public IndexMinPQ<Key> copy;
-
-
-			public HeapIterator() {
-				copy = new IndexMinPQ<Key>(pq.length - 1);
-				for (int i = 1; i <= n; i++)
-					copy.insert(pq[i], keys[pq[i]]);
-			}
-
-			public boolean hasNext() {
-				return !copy.isEmpty();
-			}
-
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-
-			public Integer next() {
-				if (!hasNext())
-					throw new NoSuchElementException();
-				return copy.delMin();
-			}
-		}
 	}

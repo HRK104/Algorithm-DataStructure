@@ -23,13 +23,7 @@ public class FloydWarshallSP {
 		//System.out.println("start FloydWarshallSP");
 		
 		for(int j=0; j<graph.getAdjLength();j++) {
-			//System.out.println("within for");
-//			DirectEdge tmp = new DirectEdge(graph.adj[j]);
-//			int head = graph.adj[j].head;//((DirectEdge) graph.edgesAdjacentTo(j)).getHead();
-//			int tail = ((DirectEdge) graph.edgesAdjacentTo(j)).getTail();
-//			double cost = ((DirectEdge) graph.edgesAdjacentTo(j)).getCost();
-//			
-//			table[head][tail] = cost;
+			
 			for (DirectEdge e : graph.edgesAdjacentTo(j)) {
 				int head = e.head;//((DirectEdge) graph.edgesAdjacentTo(j)).getHead();
 				int tail = e.tail;
@@ -46,15 +40,13 @@ public class FloydWarshallSP {
 	
 	public void calculate() {
 		boolean hasBlank = true;
-		int times = 0;
 		
 		while(hasBlank) {
-			times++;
 			//System.out.println("start while: "+times);
 			hasBlank = false;
-			for(int i=0; i<table.length;i++) {
-				for(int j=0; j<table.length;j++) {
-					for(int k=0; k<table.length;k++) {
+			for(int k=0; k<table.length;k++) {
+				for(int i=0; i<table.length;i++) {
+					for(int j=0; j<table.length;j++) {
 						if(table[i][j]>table[i][k]+table[k][j]) {
 							table[i][j] = table[i][k]+table[k][j];
 						}
